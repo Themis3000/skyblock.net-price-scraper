@@ -87,6 +87,7 @@ async function gotoPos(x, y, z, near = 4) {
 
 async function scrapeIslands() {
     for (const island of indexIslands["islands"]) {
+        await sleep(randomNumber(1000, 3000))
         console.log(`Visiting ${island["island"]}`)
         bot.chat(`/visit ${island["island"]}`)
 
@@ -127,6 +128,13 @@ function convertToCSV(objArray) {
 
     return str;
 }
+
+
+function randomNumber(min, max){
+    const r = Math.random()*(max-min) + min
+    return Math.floor(r)
+}
+
 
 bot.on('chat', async (username, message) => {
     if (username === "wateryoolukinat" && message.includes("here")) {
