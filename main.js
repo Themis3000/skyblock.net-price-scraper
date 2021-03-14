@@ -67,8 +67,19 @@ async function scrape() {
     await searchSigns()
 }
 
-async function gotoPos(x, y, z) {
+async function gotoPos(x, y, z, near = 4) {
+    const {data} = await new Promise( resolve => {
+        bot.on("goal_reached", resolve)
+        bot.on("path_update", (status) => {
+            if (["timeout", "noPath"].includes(status)) {
+                resolve("failed")
+            }
+        })
 
+        bot.pathfinder.setGoal(new GoalNear(x, y, z, near))
+    })
+
+    return data
 }
 
 
