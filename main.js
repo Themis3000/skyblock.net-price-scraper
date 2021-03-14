@@ -1,20 +1,28 @@
 const mineflayer = require('mineflayer')
 const fs = require('fs')
+const yaml = require('js-yaml')
 const pathfinder = require('mineflayer-pathfinder').pathfinder
 const Movements = require('mineflayer-pathfinder').Movements
 const { GoalNear } = require('mineflayer-pathfinder').goals
 const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
 
-const indexPlayers = ["Themis3000", "pro_user", "TroyBNL", "mglenna1", "J_Huncho", "buig", "sm3g", "enderboy29"]
-//const indexPlayers = []
+const indexIslands = yaml.load(fs.readFileSync('to_index.yml', 'utf8'))
 
 let prices = []
 
+//const bot = mineflayer.createBot({
+//    host: 'skyblock.net',
+//    port: 25565,
+//    username: 'tcm4760@gmail.com',
+//    password: 'snD6oPqEkgZKA!hBCcvN',
+//    version: false,
+//    auth: 'mojang'
+//})
+
 const bot = mineflayer.createBot({
-    host: 'skyblock.net',
+    host: '127.0.0.1',
     port: 25565,
-    username: 'tcm4760@gmail.com',
-    password: 'snD6oPqEkgZKA!hBCcvN',
+    username: 'temi_bot',
     version: false,
     auth: 'mojang'
 })
@@ -59,10 +67,32 @@ async function scrape() {
     await searchSigns()
 }
 
+async function gotoPos(x, y, z) {
+
+}
+
+
 async function scrapeIslands() {
-    for (const player of indexPlayers) {
-        console.log(`Visiting ${player}`)
-        bot.chat(`/visit ${player}`)
+    for (const island of indexIslands) {
+        console.log(`Visiting ${island["player"]}`)
+        bot.chat(`/visit ${island["player"]}`)
+
+        if (island.hasOwnProperty("locations")) {
+            await sleep(3000)
+            if (island["snap_on_visit"]) {
+                await sleep(2000)
+                await scrape()
+            }
+
+            for (const location of island["locations"]) {
+                await gotoPos(location["x"], location["y"], location["z"])
+                await sleep(2000)
+                await scrape()
+            }
+
+            return
+        }
+
         await sleep(5000)
         await scrape()
     }
