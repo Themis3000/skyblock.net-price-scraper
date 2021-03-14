@@ -56,7 +56,6 @@ function searchSigns() {
                     item: textArray[3],
                     pricePer: priceArr[1] / textArray[1]
                 }
-                console.log(price)
                 prices.push(price)
             }
         }
@@ -64,14 +63,15 @@ function searchSigns() {
 }
 
 async function scrape() {
+    console.log("scraping...")
     await searchSigns()
 }
 
 async function gotoPos(x, y, z, near = 4) {
     const {data} = await new Promise( resolve => {
         bot.on("goal_reached", resolve)
-        bot.on("path_update", (status) => {
-            if (["timeout", "noPath"].includes(status)) {
+        bot.on("path_update", (data) => {
+            if (["timeout", "noPath"].includes(data.status)) {
                 resolve("failed")
             }
         })
@@ -84,9 +84,9 @@ async function gotoPos(x, y, z, near = 4) {
 
 
 async function scrapeIslands() {
-    for (const island of indexIslands) {
-        console.log(`Visiting ${island["player"]}`)
-        bot.chat(`/visit ${island["player"]}`)
+    for (const island of indexIslands["islands"]) {
+        console.log(`Visiting ${island["island"]}`)
+        bot.chat(`/visit ${island["island"]}`)
 
         if (island.hasOwnProperty("locations")) {
             await sleep(3000)
@@ -100,12 +100,10 @@ async function scrapeIslands() {
                 await sleep(2000)
                 await scrape()
             }
-
-            return
+        } else {
+            await sleep(5000)
+            await scrape()
         }
-
-        await sleep(5000)
-        await scrape()
     }
 }
 
@@ -133,6 +131,8 @@ bot.on('chat', async (username, message) => {
 bot.on('spawn', async () => {
     const mcData = require('minecraft-data')(bot.version)
     const defaultMove = new Movements(bot, mcData)
+    defaultMove.canDig = false
+    defaultMove.maxDropDown = 256
     bot.pathfinder.setMovements(defaultMove)
 
     console.log("spawned and starting!")
