@@ -11,22 +11,22 @@ const indexIslands = yaml.load(fs.readFileSync('to_index.yml', 'utf8'))
 
 let prices = []
 
-//const bot = mineflayer.createBot({
-//    host: 'skyblock.net',
-//    port: 25565,
-//    username: 'tcm4760@gmail.com',
-//    password: 'snD6oPqEkgZKA!hBCcvN',
-//    version: false,
-//    auth: 'mojang'
-//})
-
 const bot = mineflayer.createBot({
-    host: '127.0.0.1',
+    host: 'skyblock.net',
     port: 25565,
-    username: 'temi_bot',
+    username: 'tcm4760@gmail.com',
+    password: 'snD6oPqEkgZKA!hBCcvN',
     version: false,
     auth: 'mojang'
 })
+
+//const bot = mineflayer.createBot({
+//    host: '127.0.0.1',
+//    port: 25565,
+//    username: 'temi_bot',
+//    version: false,
+//    auth: 'mojang'
+//})
 
 bot.loadPlugin(pathfinder)
 
@@ -115,9 +115,9 @@ function convertToCSV(objArray) {
     let array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
     let str = '';
 
-    for (let i = 0; i < array.length; i++) {
+    for (const row of array) {
         let line = '';
-        for (let item of array[i]) {
+        for (const [key, item] of Object.entries(row)) {
             if (line !== '') line += ','
 
             line += item;
