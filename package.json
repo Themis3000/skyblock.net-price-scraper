@@ -1,0 +1,19 @@
+{
+  "name": "mc-price-scraper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "js-yaml": "^4.0.0",
+    "minecraft-data": "^2.79.0",
+    "mineflayer": "^3.2.0",
+    "mineflayer-pathfinder": "^1.6.1",
+    "prismarine-block": "^1.8.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Themi",
+  "license": "ISC"
+}
