@@ -1,5 +1,6 @@
 const mineflayer = require('mineflayer')
 const fs = require('fs')
+const lodash = require("lodash")
 const yaml = require('js-yaml')
 const pathfinder = require('mineflayer-pathfinder').pathfinder
 const Movements = require('mineflayer-pathfinder').Movements
@@ -56,7 +57,8 @@ function searchSigns() {
                     item: textArray[3],
                     pricePer: priceArr[1] / textArray[1]
                 }
-                prices.push(price)
+                if (!lodash.some(prices, price)) //Checks if price is a duplicate
+                    prices.push(price)
             }
         }
     }
@@ -90,7 +92,7 @@ async function scrapeIslands() {
 
         if (island.hasOwnProperty("locations")) {
             await sleep(3000)
-            if (island["snap_on_visit"]) {
+            if (island["snap_on_visit"] === "yes") {
                 await sleep(2000)
                 await scrape()
             }
@@ -105,6 +107,25 @@ async function scrapeIslands() {
             await scrape()
         }
     }
+}
+
+
+function convertToCSV(objArray) {
+    let array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+    let str = '';
+
+    for (let i = 0; i < array.length; i++) {
+        let line = '';
+        for (let item of array[i]) {
+            if (line !== '') line += ','
+
+            line += item;
+        }
+
+        str += line + '\r\n';
+    }
+
+    return str;
 }
 
 bot.on('chat', async (username, message) => {
@@ -139,6 +160,7 @@ bot.on('spawn', async () => {
     await sleep(3402)
     await scrapeIslands()
 
-    fs.writeFile('prices.json', JSON.stringify(prices) + '\n', function (err) {if (err) throw err})
+    const output = convertToCSV(prices)
+    fs.writeFile('prices.csv', output + '\n', function (err) {if (err) throw err})
     console.log("Scraping complete!")
 })

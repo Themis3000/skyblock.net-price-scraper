@@ -5,6 +5,7 @@
   "main": "main.js",
   "dependencies": {
     "js-yaml": "^4.0.0",
+    "lodash": "^4.17.21",
     "minecraft-data": "^2.79.0",
     "mineflayer": "^3.2.0",
     "mineflayer-pathfinder": "^1.6.1",
