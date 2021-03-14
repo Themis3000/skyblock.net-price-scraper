@@ -1,0 +1,19 @@
+islands:
+  -
+    island: Themis3000
+  -
+    island: sneaky0swag
+    snap_on_visit: yes
+    locations:
+      -
+        x: -173
+        y: 76
+        z: 12
+  -
+    island: test
+    snap_on_visit: no
+    locations:
+      -
+        x: -162
+        y: 85
+        z: 6
