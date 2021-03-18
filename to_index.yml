@@ -1,4 +1,12 @@
 islands:
+  - island: LaughingFuzzball
+    snap_on_visit: yes
+    locations:
+      -
+        x: 27223
+        y: 148
+        z: -33632
+
   - island: xXCallofMinersxx
     snap_on_visit: yes
     locations:
@@ -27,8 +35,6 @@ islands:
   -
     island: pro_user
   -
-    island: Troy_BNL
-  -
     island: mglenna1
   -
     island: J_Huncho
@@ -46,3 +52,7 @@ islands:
     island: UrsusMaiorus
   -
     island: ursusalt2
+  -
+    island: TroyBNL
+  -
+    island: CarrotShop

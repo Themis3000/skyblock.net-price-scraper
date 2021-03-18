@@ -7,7 +7,8 @@ const Movements = require('mineflayer-pathfinder').Movements
 const { GoalNear } = require('mineflayer-pathfinder').goals
 const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
 
-const indexIslands = yaml.load(fs.readFileSync('to_index.yml', 'utf8'))
+//const indexIslands = yaml.load(fs.readFileSync('to_index.yml', 'utf8'))
+const indexIslands = yaml.load(fs.readFileSync("temp_index.yml", 'utf8'))
 
 let prices = []
 
@@ -35,7 +36,7 @@ function searchSigns() {
         matching: function (block) {
             return block.name === 'oak_wall_sign'
         },
-        maxDistance: 128,
+        maxDistance: 256,
         count: 1000
     })
 
@@ -70,6 +71,8 @@ async function scrape() {
 }
 
 async function gotoPos(x, y, z, near = 4) {
+    console.log(`going to ${x}, ${y}, ${z}`)
+    
     const {data} = await new Promise( resolve => {
         bot.on("goal_reached", resolve)
         bot.on("path_update", (data) => {
@@ -87,7 +90,7 @@ async function gotoPos(x, y, z, near = 4) {
 
 async function scrapeIslands() {
     for (const island of indexIslands["islands"]) {
-        await sleep(randomNumber(1000, 3000))
+        await sleep(randomNumber(2000, 8000))
         console.log(`Visiting ${island["island"]}`)
         bot.chat(`/visit ${island["island"]}`)
 
@@ -135,27 +138,6 @@ function randomNumber(min, max){
     return Math.floor(r)
 }
 
-
-bot.on('chat', async (username, message) => {
-    if (username === "wateryoolukinat" && message.includes("here")) {
-        let player = bot.players["wateryoolukinat"]
-        if (player.entity !== null) {
-            console.log("going to jo")
-            bot.chat("/msg wateryoolukinat coming!")
-            let position = player.entity.position
-            bot.pathfinder.setGoal(new GoalNear(position.x, position.y, position.z, 1))
-        } else {
-            bot.chat("/msg wateryoolukinat ur too far")
-        }
-    } else if (username === "wateryoolukinat" && message.includes("do it")) {
-        await scrape()
-        bot.chat("/msg wateryoolukinat did it")
-    } else if (username === "wateryoolukinat" && message.includes("goto ")) {
-        const place = message.split("goto ")
-        bot.chat(`/msg wateryoolukinat going to ${place[1]}`)
-        bot.chat(`/visit ${place[1]}`)
-    }
-})
 
 bot.on('spawn', async () => {
     const mcData = require('minecraft-data')(bot.version)
