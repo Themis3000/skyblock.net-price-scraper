@@ -7,8 +7,8 @@ const Movements = require('mineflayer-pathfinder').Movements
 const { GoalNear } = require('mineflayer-pathfinder').goals
 const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
 
-//const indexIslands = yaml.load(fs.readFileSync('to_index.yml', 'utf8'))
-const indexIslands = yaml.load(fs.readFileSync("temp_index.yml", 'utf8'))
+const indexIslands = yaml.load(fs.readFileSync('to_index.yml', 'utf8'))
+//const indexIslands = yaml.load(fs.readFileSync("temp_index.yml", 'utf8'))
 
 let prices = []
 
@@ -20,14 +20,6 @@ const bot = mineflayer.createBot({
     version: false,
     auth: 'mojang'
 })
-
-//const bot = mineflayer.createBot({
-//    host: '127.0.0.1',
-//    port: 25565,
-//    username: 'temi_bot',
-//    version: false,
-//    auth: 'mojang'
-//})
 
 bot.loadPlugin(pathfinder)
 
