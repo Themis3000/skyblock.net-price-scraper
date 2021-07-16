@@ -1,5 +1,5 @@
 # skyblock.net price scraper
-This script runs a bot on the server skyblock.net for the purpose of automatic price scraping from signs. From a yaml file, this bot is configured to go to various user islands and cordinates (for if their island is too big for all signs to fit in the render distance) and dump all shop signs into a csv file. This allows you to quickly and accurately find the best price for any given item, and who is buying them for the best profit.
+This script runs a bot on the minecraft server skyblock.net for the purpose of automatic price scraping from signs. From a yaml file, this bot is configured to go to various user islands and cordinates (for if their island is too big for all signs to fit in the render distance) and dump all shop signs into a csv file. This allows you to quickly and accurately find the best price for any given item, and who is buying them for the best profit.
 
 Using this script you can very easily find people selling for lower then others are buying, allowing you to be the greedy middle man meteoriting transactions between users.
 
