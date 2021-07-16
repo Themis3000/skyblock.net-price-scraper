@@ -15,8 +15,8 @@ let prices = []
 const bot = mineflayer.createBot({
     host: 'skyblock.net',
     port: 25565,
-    username: 'tcm4760@gmail.com',
-    password: 'snD6oPqEkgZKA!hBCcvN',
+    username: 'username',
+    password: 'Password',
     version: false,
     auth: 'mojang'
 })
